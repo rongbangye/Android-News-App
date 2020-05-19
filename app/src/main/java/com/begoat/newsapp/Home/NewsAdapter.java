@@ -1,7 +1,5 @@
 package com.begoat.newsapp.Home;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.begoat.newsapp.R;
 import com.begoat.newsapp.retrofit.Response.Article;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Response;
-
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private List<Article> articleList;
 
-    public NewsAdapter(List<Article> articleList) {
+     NewsAdapter(List<Article> articleList) {
         this.articleList = articleList;
     }
 
@@ -45,16 +39,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         titleTextView.setText(article.getTitle());
         TextView description = holder.descriptionTextView;
         description.setText(article.getDescription());
-        Picasso.get().load(article.getUrlToImage()).into(holder.imageView, new Callback() {
-            @Override
-            public void onSuccess() {
-            }
-
-            @Override
-            public void onError(Exception e) {
-                Log.e("ERROR", "image failed" + e.getLocalizedMessage());
-            }
-        });
+        Picasso.get().load(article.getUrlToImage()).into(holder.imageView);
     }
 
     @Override
@@ -62,11 +47,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return articleList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView titleTextView, descriptionTextView;
-        public ImageView imageView;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView titleTextView, descriptionTextView;
+        ImageView imageView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = (TextView) itemView.findViewById(R.id.news_title);
             descriptionTextView = (TextView) itemView.findViewById(R.id.news_description);
